@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "EccVRU7p9WAUH+oeELQNI4dW1Q0GFSbLQtTJ11ZbSpKkD6Klis2DRu8y7YZSDPhEA9y8zuH70Qvm6F2VVpVGaQ==",
+  "dgSpecHash": "WqFcQmhPtRKaiYLV0++dfNFZ91epZLy8JIHtR7TxJHdbcPOQ7P042tEyvxQK1cvlOmJnJOhvdNRAG+8ujLO14A==",
   "success": true,
   "projectFilePath": "C:\\Users\\marvi.000\\OneDrive\\TestInvercasa\\test\\InvercasaTest\\ControlVacacionesBackEnd\\ControlVacacionesBackEnd.csproj",
   "expectedPackageFiles": [
@@ -51,6 +51,7 @@
     "C:\\Users\\marvi.000\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.5.0\\swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512",
     "C:\\Users\\marvi.000\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
     "C:\\Users\\marvi.000\\.nuget\\packages\\system.codedom\\4.4.0\\system.codedom.4.4.0.nupkg.sha512",
+    "C:\\Users\\marvi.000\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512",
     "C:\\Users\\marvi.000\\.nuget\\packages\\system.configuration.configurationmanager\\5.0.0\\system.configuration.configurationmanager.5.0.0.nupkg.sha512",
     "C:\\Users\\marvi.000\\.nuget\\packages\\system.diagnostics.diagnosticsource\\5.0.0\\system.diagnostics.diagnosticsource.5.0.0.nupkg.sha512",
     "C:\\Users\\marvi.000\\.nuget\\packages\\system.drawing.common\\5.0.0\\system.drawing.common.5.0.0.nupkg.sha512",

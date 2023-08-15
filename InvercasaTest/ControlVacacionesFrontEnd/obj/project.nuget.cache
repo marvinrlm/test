@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "RrGcXSKjy9HuMkMmft1DyPAzRanqNKkUXScHSZ1QbF+2f5izgIxWj9SiRKotfvdPl3/VSS8rr0DI1XfMOcK3DQ==",
+  "dgSpecHash": "dTuPrvx8aTY6gRK0ITlRPFuKzn2swTGdGMdFe8jb0i7O74N82qgYdqmcvOy2f0HrtxMqNQyVrF3XtwfV+kvZIg==",
   "success": true,
   "projectFilePath": "C:\\Users\\marvi.000\\OneDrive\\TestInvercasa\\test\\InvercasaTest\\ControlVacacionesFrontEnd\\ControlVacacionesFrontEnd.csproj",
   "expectedPackageFiles": [
@@ -44,6 +44,7 @@
     "C:\\Users\\marvi.000\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\marvi.000\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
     "C:\\Users\\marvi.000\\.nuget\\packages\\system.codedom\\4.4.0\\system.codedom.4.4.0.nupkg.sha512",
+    "C:\\Users\\marvi.000\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512",
     "C:\\Users\\marvi.000\\.nuget\\packages\\system.configuration.configurationmanager\\5.0.0\\system.configuration.configurationmanager.5.0.0.nupkg.sha512",
     "C:\\Users\\marvi.000\\.nuget\\packages\\system.diagnostics.diagnosticsource\\5.0.0\\system.diagnostics.diagnosticsource.5.0.0.nupkg.sha512",
     "C:\\Users\\marvi.000\\.nuget\\packages\\system.drawing.common\\5.0.0\\system.drawing.common.5.0.0.nupkg.sha512",
