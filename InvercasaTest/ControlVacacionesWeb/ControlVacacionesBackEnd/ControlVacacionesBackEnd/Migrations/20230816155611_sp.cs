@@ -5,7 +5,7 @@
 namespace ControlVacacionesBackEnd.Migrations
 {
     /// <inheritdoc />
-    public partial class ProcedimientosAlmacenados : Migration
+    public partial class sp : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -92,7 +92,7 @@ namespace ControlVacacionesBackEnd.Migrations
                         END");
 
 
-                    
+
 
 
 

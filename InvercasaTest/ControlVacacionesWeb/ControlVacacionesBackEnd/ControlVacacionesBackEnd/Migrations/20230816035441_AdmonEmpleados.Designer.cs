@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ControlVacacionesBackEnd.Migrations
 {
     [DbContext(typeof(ControlVacacionesBackEndContext))]
-    [Migration("20230815204809_AdministracionVacaciones")]
-    partial class AdministracionVacaciones
+    [Migration("20230816035441_AdmonEmpleados")]
+    partial class AdmonEmpleados
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,7 +52,7 @@ namespace ControlVacacionesBackEnd.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("SalarioBaseMensual")
-                        .HasColumnType("decimal(18,2");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -67,30 +67,13 @@ namespace ControlVacacionesBackEnd.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("EmpleadoId")
-                        .HasColumnType("int");
-
                     b.Property<string>("TipoIdentificacion")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmpleadoId");
-
                     b.ToTable("TiposIdentificacion");
-                });
-
-            modelBuilder.Entity("ControlVacacionesBackEnd.Models.TiposIdentificacion", b =>
-                {
-                    b.HasOne("ControlVacacionesBackEnd.Models.Empleado", null)
-                        .WithMany("TiposIdentificaciones")
-                        .HasForeignKey("EmpleadoId");
-                });
-
-            modelBuilder.Entity("ControlVacacionesBackEnd.Models.Empleado", b =>
-                {
-                    b.Navigation("TiposIdentificaciones");
                 });
 #pragma warning restore 612, 618
         }

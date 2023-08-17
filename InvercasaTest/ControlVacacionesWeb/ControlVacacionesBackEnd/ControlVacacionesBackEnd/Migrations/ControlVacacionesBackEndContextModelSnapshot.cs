@@ -49,11 +49,44 @@ namespace ControlVacacionesBackEnd.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("SalarioBaseMensual")
-                        .HasColumnType("decimal(18,2");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Empleado");
+                });
+
+            modelBuilder.Entity("ControlVacacionesBackEnd.Models.TablasSinLlaves.VistaEmpleados", b =>
+                {
+                    b.Property<string>("Direccion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("FechaIngreso")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdTipoIdentificacion")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NombreCompleto")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumeroIdentificacion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("SalarioBaseMensual")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("TipoIdentificacion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable("VistaEmpleados");
                 });
 
             modelBuilder.Entity("ControlVacacionesBackEnd.Models.TiposIdentificacion", b =>
@@ -64,30 +97,13 @@ namespace ControlVacacionesBackEnd.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("EmpleadoId")
-                        .HasColumnType("int");
-
                     b.Property<string>("TipoIdentificacion")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmpleadoId");
-
                     b.ToTable("TiposIdentificacion");
-                });
-
-            modelBuilder.Entity("ControlVacacionesBackEnd.Models.TiposIdentificacion", b =>
-                {
-                    b.HasOne("ControlVacacionesBackEnd.Models.Empleado", null)
-                        .WithMany("TiposIdentificaciones")
-                        .HasForeignKey("EmpleadoId");
-                });
-
-            modelBuilder.Entity("ControlVacacionesBackEnd.Models.Empleado", b =>
-                {
-                    b.Navigation("TiposIdentificaciones");
                 });
 #pragma warning restore 612, 618
         }

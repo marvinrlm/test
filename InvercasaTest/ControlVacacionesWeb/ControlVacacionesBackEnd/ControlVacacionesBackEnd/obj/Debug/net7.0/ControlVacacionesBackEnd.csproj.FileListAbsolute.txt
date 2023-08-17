@@ -252,5 +252,3 @@ C:\Users\marvi.000\OneDrive\TestInvercasa\test\InvercasaTest\ControlVacacionesWe
 C:\Users\marvi.000\OneDrive\TestInvercasa\test\InvercasaTest\ControlVacacionesWeb\ControlVacacionesBackEnd\ControlVacacionesBackEnd\obj\Debug\net7.0\ControlVacacionesBackEnd.pdb
 C:\Users\marvi.000\OneDrive\TestInvercasa\test\InvercasaTest\ControlVacacionesWeb\ControlVacacionesBackEnd\ControlVacacionesBackEnd\obj\Debug\net7.0\ControlVacacionesBackEnd.genruntimeconfig.cache
 C:\Users\marvi.000\OneDrive\TestInvercasa\test\InvercasaTest\ControlVacacionesWeb\ControlVacacionesBackEnd\ControlVacacionesBackEnd\obj\Debug\net7.0\ref\ControlVacacionesBackEnd.dll
-C:\Users\marvi.000\OneDrive\TestInvercasa\test\InvercasaTest\ControlVacacionesWeb\ControlVacacionesBackEnd\ControlVacacionesBackEnd\obj\Debug\net7.0\ControlVacacionesBackEnd.RazorAssemblyInfo.cache
-C:\Users\marvi.000\OneDrive\TestInvercasa\test\InvercasaTest\ControlVacacionesWeb\ControlVacacionesBackEnd\ControlVacacionesBackEnd\obj\Debug\net7.0\ControlVacacionesBackEnd.RazorAssemblyInfo.cs

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ControlVacacionesBackEnd.Migrations
 {
     /// <inheritdoc />
-    public partial class AdministracionEmpleados : Migration
+    public partial class AdmonEmpleados : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,33 +35,22 @@ namespace ControlVacacionesBackEnd.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TipoIdentificacion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EmpleadoId = table.Column<int>(type: "int", nullable: true)
+                    TipoIdentificacion = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TiposIdentificacion", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TiposIdentificacion_Empleado_EmpleadoId",
-                        column: x => x.EmpleadoId,
-                        principalTable: "Empleado",
-                        principalColumn: "Id");
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TiposIdentificacion_EmpleadoId",
-                table: "TiposIdentificacion",
-                column: "EmpleadoId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "TiposIdentificacion");
+                name: "Empleado");
 
             migrationBuilder.DropTable(
-                name: "Empleado");
+                name: "TiposIdentificacion");
         }
     }
 }

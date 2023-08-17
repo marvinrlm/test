@@ -8,9 +8,11 @@ namespace ControlVacacionesBackEnd.Models
         public int Id { get; set; }
         [Required]
         public string NombreCompleto { get; set; } = string.Empty;
-        [Required]
+       
         [ForeignKey("IdTipoIdentificacion")]
         public int IdTipoIdentificacion { get; set; }
+
+    
         [Required]
         public string NumeroIdentificacion { get; set; } = string.Empty;
         [Required]
@@ -22,7 +24,9 @@ namespace ControlVacacionesBackEnd.Models
         [Required]
         public string Direccion { get; set; } = string.Empty;
 
-        //public ICollection<TiposIdentificacion> TiposIdentificaciones { get; set; } = new List<TiposIdentificacion>();
+        //public string TipoIdentificacion { get; } = string.Empty;
+
+       // public ICollection<TiposIdentificacion> TiposIdentificaciones { get; set; } = new List<TiposIdentificacion>();
 
     }
 }
