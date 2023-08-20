@@ -12,7 +12,7 @@
     <WebStackScaffolding_LayoutPageFile />
     <WebStackScaffolding_DbContextTypeFullName>ControlVacacionesBackEnd.Data.ControlVacacionesBackEndContext</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
-    <Controller_SelectedScaffolderID>ApiControllerWithContextScaffolder</Controller_SelectedScaffolderID>
+    <Controller_SelectedScaffolderID>ApiControllerEmptyScaffolder</Controller_SelectedScaffolderID>
     <Controller_SelectedScaffolderCategoryPath>root/Common/Api</Controller_SelectedScaffolderCategoryPath>
     <WebStackScaffolding_IsViewGenerationSelected>True</WebStackScaffolding_IsViewGenerationSelected>
   </PropertyGroup>

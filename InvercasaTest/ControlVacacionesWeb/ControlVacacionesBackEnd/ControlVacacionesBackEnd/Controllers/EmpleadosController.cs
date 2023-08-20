@@ -19,6 +19,8 @@ using System.Collections;
 using System.Data.SqlTypes;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using System.Reflection.Metadata;
+using System.Data.Common;
+using System.Security.Cryptography;
 
 namespace ControlVacacionesBackEnd.Controllers
 {
@@ -36,8 +38,8 @@ namespace ControlVacacionesBackEnd.Controllers
 
         public EmpleadosController(ControlVacacionesBackEndContext context, IConfiguration configuration)
         {
-            _context = context;
-            _configuration = configuration;
+            _context = context;  //Para usar con Entity Framework
+            _configuration = configuration; //Para usar con procedimientos almacenados
         }
 
 
@@ -69,10 +71,6 @@ namespace ControlVacacionesBackEnd.Controllers
 
             await foreach (var empleado in empleados)
             {
-                //if (product.IsOnSale)
-                    //{
-                    //    yield return product;
-                    //}
 
                     yield return empleado;
 
@@ -108,7 +106,9 @@ namespace ControlVacacionesBackEnd.Controllers
 
             
             var empleado = await _context.Empleado
+                
                 .FromSqlRaw($"EXECUTE spSelEmpleadoId @Id={id};")
+                
                 .ToListAsync();
 
             //var empleado1 = await _context.Database.ExecuteSqlAsync<Empleado>(@"")
@@ -117,16 +117,6 @@ namespace ControlVacacionesBackEnd.Controllers
                 return NotFound();
             }
             return Ok(empleado);
-
-
-
-            /*var empleados = _context.Set<VistaEmpleados>().OrderBy(p => p.NombreCompleto).();
-            await foreach (var empleado in empleados)
-            {
-                yield return empleado;
-
-            }*/
-
         }
 
 
@@ -143,11 +133,50 @@ namespace ControlVacacionesBackEnd.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(empleado).State = EntityState.Modified;
+            //_context.Entry(empleado).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                //await _context.SaveChangesAsync();
+
+                _connectionString = _configuration.GetConnectionString("ControlVacacionesBackEndContext");
+
+                using (SqlConnection connection = new SqlConnection(_connectionString)) { 
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand("spUpdEmpleado", connection)) {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.Add(
+                        new SqlParameter
+                        {
+                            ParameterName = "@Id",
+                            SqlDbType = SqlDbType.Int,
+                            //Direction = ParameterDirection.Output,
+                             Value = id
+
+                        });
+
+                        command.Parameters.AddWithValue("@NombreCompleto", empleado.NombreCompleto);
+                        command.Parameters.AddWithValue("@IdTipoIdentificacion", empleado.IdTipoIdentificacion);
+                        command.Parameters.AddWithValue("@NumeroIdentificacion", empleado.NumeroIdentificacion);
+                        command.Parameters.AddWithValue("@FechaIngreso", empleado.FechaIngreso);
+                        command.Parameters.AddWithValue("@SalarioBaseMensual", empleado.SalarioBaseMensual);
+                        command.Parameters.AddWithValue("@Direccion", empleado.Direccion);
+
+                        int result;
+
+                        result = await command.ExecuteNonQueryAsync();
+
+                        return Ok(result);
+
+
+                    }
+
+                }
+                
+
+
+
+
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -161,7 +190,7 @@ namespace ControlVacacionesBackEnd.Controllers
                 }
             }
 
-            return NoContent();
+            //return NoContent();
         }
 
         // POST: api/Empleados
@@ -183,7 +212,7 @@ namespace ControlVacacionesBackEnd.Controllers
 
         [HttpPost]
         //public  Task<ActionResult<Empleado>> PostEmpleado(Empleado empleado)
-        public IActionResult PostEmpleado(Empleado empleado)
+        public async Task<ActionResult> PostEmpleado(Empleado empleado)
         {
 
            
@@ -192,105 +221,54 @@ namespace ControlVacacionesBackEnd.Controllers
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                // var sql = $"EXECUTE spInsEmpleado @NombreCompleto='{empleado.NombreCompleto}', @IdTipoIdentificacion={empleado.IdTipoIdentificacion}, @NumeroIdentificacion='{empleado.NumeroIdentificacion}', @FechaIngreso='{empleado.FechaIngreso:yyyy-MM-dd}',@SalarioBaseMensual={empleado.SalarioBaseMensual}, @Direccion='{empleado.Direccion}', @Id OUTPUT";
                 using (SqlCommand command = new SqlCommand("spInsEmpleado", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    //command.Parameters.Add("@Id");
                     command.Parameters.Add(
-                    new SqlParameter
-                    {
-                        ParameterName = "@Id",
-                        SqlDbType = SqlDbType.Int,
-                        Direction = ParameterDirection.Output,
-                        // Value = new SqlXml(idList.CreateReader())
+                        new SqlParameter
+                        {
+                            ParameterName = "@Id",
+                            SqlDbType = SqlDbType.Int,
+                            Direction = ParameterDirection.Output,
+                            // Value = new SqlXml(idList.CreateReader())
                    
-                    });
-                /*var parameterId = new SqlParameter("@Id",0);
-                parameterId.Direction = ParameterDirection.Output;
-                parameterId.DbType = DbType.Int32;*/
+                        });
 
                 command.Parameters.AddWithValue("@NombreCompleto", empleado.NombreCompleto);
                 command.Parameters.AddWithValue("@IdTipoIdentificacion", empleado.IdTipoIdentificacion);
-                
                 command.Parameters.AddWithValue("@NumeroIdentificacion", empleado.NumeroIdentificacion);
-             
                 command.Parameters.AddWithValue("@FechaIngreso", empleado.FechaIngreso);
-                
-               command.Parameters.AddWithValue("@SalarioBaseMensual", empleado.SalarioBaseMensual);
-                
+                command.Parameters.AddWithValue("@SalarioBaseMensual", empleado.SalarioBaseMensual);
                 command.Parameters.AddWithValue("@Direccion", empleado.Direccion);
                 
-                //command.Parameters.AddWithValue("@Id", parameterId);
-              
+                //command.ExecuteNonQuery();
 
 
+                   await using (SqlDataReader reader = command.ExecuteReader())
+                    {
 
+                        if (reader.HasRows)
+                        {
+                            reader.Read();
+                            var newRowID = Convert.ToInt32(reader["Id"]);
+                            reader.Close();
+                            return Ok(newRowID);
+                           
+                        }
+                        else
+                        {
+                            return Ok(null);
+                        }
 
-                /*
-                var parameter1 = command.Parameters.AddWithValue("@NombreCompleto", empleado.NombreCompleto);
-                    parameter1.DbType = DbType.String;
-                    var parameter2 = command.Parameters.AddWithValue("@IdTipoIdentificacion", empleado.IdTipoIdentificacion);
-                    parameter2.DbType = DbType.Int32;
-                    var parameter3 = command.Parameters.AddWithValue("@NumeroIdentificacion", empleado.NumeroIdentificacion);
-                    parameter3.DbType = DbType.String;
-                    var parameter4 = command.Parameters.AddWithValue("@FechaIngreso", empleado.FechaIngreso);
-                    parameter4.DbType = DbType.Date;
-                    var parameter5 = command.Parameters.AddWithValue("@SalarioBasicoMensual", empleado.SalarioBaseMensual);
-                    parameter5.DbType = DbType.Decimal;
-                    var parameter6 = command.Parameters.AddWithValue("@Direccion", empleado.Direccion);
-                    parameter6.DbType = DbType.String;
-                    var parameter7 = command.Parameters.AddWithValue("@Id", parameterId);
-                    parameter7.DbType = DbType.Int32;*/
+                        
+                    }
 
-                    command.ExecuteNonQuery();
-                   // var id = parameterId.Value;
-                    return Ok();
 
 
                 }
 
             }
-        
 
-
-
-
-
-
-
-            /*var idoutput = new SqlParameter
-            {
-                ParameterName = "@Id",
-                SqlDbType = SqlDbType.Int,
-                Direction = ParameterDirection.Output
-            };*/
-
-            //var sql = $"EXECUTE spInsEmpleado @NombreCompleto='{empleado.NombreCompleto}', @IdTipoIdentificacion={empleado.IdTipoIdentificacion}, @NumeroIdentificacion='{empleado.NumeroIdentificacion}', @FechaIngreso='{empleado.FechaIngreso:yyyy-MM-dd}',@SalarioBaseMensual={empleado.SalarioBaseMensual}, @Direccion='{empleado.Direccion}', @Id OUTPUT";
-            //var sql = $"EXECUTE spInsEmpleado @NombreCompleto='{empleado.NombreCompleto}', @IdTipoIdentificacion={empleado.IdTipoIdentificacion}, @NumeroIdentificacion='{empleado.NumeroIdentificacion}', @FechaIngreso='{empleado.FechaIngreso:yyyy-MM-dd}',@SalarioBaseMensual={empleado.SalarioBaseMensual}, @Direccion='{empleado.Direccion}', @Id OUTPUT";
-
-
-            //_context.Database.ExecuteSqlRaw(sql, idoutput);
-
-            //int outputValue = (int)idoutput.Value;
-
-            // Aquí puedes utilizar el valor de salida, como mostrarlo en la respuesta de la API
-
-            //return Ok(outputValue);
-
-
-
-           /* var emp = await _context.Empleado
-                .FromSqlRaw($"EXECUTE spInsEmpleado @NombreCompleto='{empleado.NombreCompleto}', @IdTipoIdentificacion={empleado.IdTipoIdentificacion}, @NumeroIdentificacion='{empleado.NumeroIdentificacion}', @FechaIngreso='{empleado.FechaIngreso:yyyy-MM-dd}',@SalarioBaseMensual={empleado.SalarioBaseMensual}, @Direccion='{empleado.Direccion}', @Id OUTPUT")
-                .ToListAsync();
-
-            int outputValue = (int)idoutput.Value;
-
-            if (outputValue == 0)
-            {
-                return BadRequest();
-            }
-            return Ok(outputValue);*/
         }
 
 
@@ -310,11 +288,43 @@ namespace ControlVacacionesBackEnd.Controllers
                 return NotFound();
             }
 
-            _context.Empleado.Remove(empleado);
-            await _context.SaveChangesAsync();
+            /* _context.Empleado.Remove(empleado);
+             await _context.SaveChangesAsync();*/
+            _connectionString = _configuration.GetConnectionString("ControlVacacionesBackEndContext");
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using(SqlCommand command = new SqlCommand("spDelEmpleado", connection))
+                {
+                    //command.Parameters.AddWithValue("@Id", id);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add(
+                        
+                        new SqlParameter
+
+                        {
+                            ParameterName = "@Id",
+                            SqlDbType = SqlDbType.Int,
+                            //Direction = ParameterDirection.Output,
+                             Value = id,
+
+                        });
+                    command.ExecuteNonQuery();
+
+                }
+                
+            }
 
             return NoContent();
         }
+
+
+
+
+
+
+
 
         private bool EmpleadoExists(int id)
         {
