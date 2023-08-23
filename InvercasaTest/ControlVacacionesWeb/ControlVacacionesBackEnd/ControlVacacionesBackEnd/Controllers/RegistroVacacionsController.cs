@@ -113,6 +113,37 @@ namespace ControlVacacionesBackEnd.Controllers
 
         }
 
+        [HttpGet("consolidadas")]
+
+        public ActionResult<IEnumerable<VistaVacacionesConsolidadas>> GetVacacionesConsolidadas()
+        {
+
+            var LstVacacionesAcumuladas = new List<VistaVacacionesConsolidadas>();
+            _connectionString = _configuration.GetConnectionString("ControlVacacionesBackEndContext");
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("Select * from VistaVacacionesConsolidadas",connection)) { 
+                    command.CommandType = CommandType.Text;
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read()) {
+                            LstVacacionesAcumuladas.Add(new VistaVacacionesConsolidadas
+                            {
+                                IdEmpleado = reader.GetInt32("IdEmpleado"),
+                                NombreCompleto = reader.GetString("NombreCompleto"),
+                                Acumulado = reader.GetDecimal("Acumulado"),
+                                Tomadas = reader.GetDecimal("Tomadas"),
+                                Saldo = reader.GetDecimal("Saldo")
+                            });
+                        }
+                    }
+                }
+            }
+
+            return LstVacacionesAcumuladas;
+        }
         // GET: api/RegistroVacacions/5
        /* [HttpGet("{id}/{fecha}")]
         public async Task<ActionResult<RegistroVacacion>> GetRegistroVacacion(int id, DateTime fecha)
