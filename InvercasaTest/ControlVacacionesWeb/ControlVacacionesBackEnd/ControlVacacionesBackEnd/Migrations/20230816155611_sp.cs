@@ -99,6 +99,9 @@ namespace ControlVacacionesBackEnd.Migrations
 
 
 
+
+
+
         }
 
         /// <inheritdoc />
@@ -109,6 +112,7 @@ namespace ControlVacacionesBackEnd.Migrations
             migrationBuilder.Sql("DROP PROCEDURE spUpdEmpleado");
             migrationBuilder.Sql("DROP PROCEDURE spSelEmpleados");
             migrationBuilder.Sql("DROP PROCEDURE spSelEmpleadoId");
+
         }
     }
 }

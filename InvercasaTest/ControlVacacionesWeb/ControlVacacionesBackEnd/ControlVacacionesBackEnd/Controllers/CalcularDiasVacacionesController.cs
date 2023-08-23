@@ -15,14 +15,14 @@ namespace ControlVacacionesBackEnd.Controllers
     
     public class CalcularDiasVacacionesController : ControllerBase
     {
-        private readonly ControlVacacionesBackEndContext _context;
+        //private readonly ControlVacacionesBackEndContext _context;
         private readonly IConfiguration _configuration;
 
         private string? _connectionString;
 
         public CalcularDiasVacacionesController(ControlVacacionesBackEndContext context, IConfiguration configuration)
         {
-            _context = context; 
+            //_context = context; 
             _configuration = configuration;
         }
 
@@ -51,7 +51,7 @@ namespace ControlVacacionesBackEnd.Controllers
 
                     result = (decimal)command.ExecuteScalar();
 
-                    return Ok((decimal)result);
+                    return Ok(result);
 
                     //return Ok(result);
 

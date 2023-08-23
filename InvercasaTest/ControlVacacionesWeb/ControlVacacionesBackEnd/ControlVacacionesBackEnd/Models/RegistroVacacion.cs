@@ -13,7 +13,9 @@ namespace ControlVacacionesBackEnd.Models
         [ForeignKey("IdEstadoVacacion")]
         public int IdEstadoVacacion { get; set; }
 
-        public ICollection<EstadosVacacion> EstadosVacaciones { get; set; } = new List<EstadosVacacion>();
+        //public ICollection<EstadoVacacion> EstadosVacaciones { get; set; } = new List<EstadoVacacion>();
 
     }
+
+    
 }

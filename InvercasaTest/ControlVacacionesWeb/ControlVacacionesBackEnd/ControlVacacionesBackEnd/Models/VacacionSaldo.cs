@@ -15,10 +15,10 @@ namespace ControlVacacionesBackEnd.Models
         public int Mes { get; set; }
         [Required]
         [Column(TypeName="decimal(18,2)")]
-        public decimal VacacionAcumulada { get; set; }
+        public decimal VacacionesAcumuladas { get; set; }
         [Required]
         [Column(TypeName ="decimal(18,2)")]
-        public decimal VacacionTomada { get; set; }
+        public decimal VacacionesTomadas { get; set; }
 
 
     }

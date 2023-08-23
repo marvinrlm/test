@@ -2,10 +2,10 @@
 
 namespace ControlVacacionesBackEnd.Models
 {
-    public class EstadosVacacion
+    public class EstadoVacacion
     {
         public int Id { get; set; }
         [Required]
-        public string EstadoVacacion { get; set; } = string.Empty;
+        public string EstadosVacacion { get; set; } = string.Empty;
     }
 }

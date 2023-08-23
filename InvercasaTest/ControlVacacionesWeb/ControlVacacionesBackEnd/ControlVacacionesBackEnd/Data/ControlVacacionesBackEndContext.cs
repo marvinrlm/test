@@ -25,6 +25,19 @@ namespace ControlVacacionesBackEnd.Data
             /*.HasOne(o => o.Customer)
             .WithMany()
             .HasForeignKey(o => o.CustomerId);*/
+
+
+
+            modelBuilder.Entity<RegistroVacacion>().HasKey(table => new
+            {
+                table.IdEmpleado,
+                table.FechaVacacion
+            });
         }
+
+  
+        public DbSet<RegistroVacacion> RegistroVacacion { get; set; }
+
+        public DbSet<ControlVacacionesBackEnd.Models.EstadoVacacion> EstadoVacacion { get; set; } = default!;
     }
 }

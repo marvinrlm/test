@@ -4,6 +4,7 @@ using ControlVacacionesBackEnd.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ControlVacacionesBackEnd.Migrations
 {
     [DbContext(typeof(ControlVacacionesBackEndContext))]
-    partial class ControlVacacionesBackEndContextModelSnapshot : ModelSnapshot
+    [Migration("20230821153649_AdmonVacaciones")]
+    partial class AdmonVacaciones
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,41 +57,6 @@ namespace ControlVacacionesBackEnd.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Empleado");
-                });
-
-            modelBuilder.Entity("ControlVacacionesBackEnd.Models.EstadoVacacion", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("EstadosVacacion")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EstadoVacacion");
-                });
-
-            modelBuilder.Entity("ControlVacacionesBackEnd.Models.RegistroVacacion", b =>
-                {
-                    b.Property<int>("IdEmpleado")
-                        .HasColumnType("int")
-                        .HasColumnOrder(0);
-
-                    b.Property<DateTime>("FechaVacacion")
-                        .HasColumnType("datetime2")
-                        .HasColumnOrder(1);
-
-                    b.Property<int>("IdEstadoVacacion")
-                        .HasColumnType("int");
-
-                    b.HasKey("IdEmpleado", "FechaVacacion");
-
-                    b.ToTable("RegistroVacacion");
                 });
 
             modelBuilder.Entity("ControlVacacionesBackEnd.Models.TablasSinLlaves.VistaEmpleados", b =>
